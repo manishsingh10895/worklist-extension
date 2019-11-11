@@ -1,0 +1,16 @@
+form {
+  display: flex;
+  justify-content: center;
+  padding: 15px 0;
+}
+
+.form-group > * {
+  margin: 0 8px;
+}
+
+
+
+
+.new-list-form input {
+  color: white !important;
+}
