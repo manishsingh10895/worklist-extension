@@ -11,4 +11,10 @@
 
 ### Screenshots
 
+
+#### Changelog 
+ * Added support for checklists 
+ * Added dynamic backgrounds
+ * Added support tasks as a url
+
 ![Screenshot](images/screenshot.png)

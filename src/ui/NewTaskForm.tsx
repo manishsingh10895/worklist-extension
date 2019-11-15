@@ -5,13 +5,16 @@ import './NewListForm.css';
 import Task from "../models/task.model";
 
 type Inputs = {
-    onNewTask: Function
+    onNewTask: Function,
+    //If this task comes under a checklist
+    isCheckedItem?: boolean
 };
 
 export class NewTaskForm extends React.Component<Inputs> {
     state = {
         title: '',
-        completed: false
+        completed: false,
+        isChecklist: false,
     };
 
     constructor(props: Inputs) {
@@ -23,12 +26,13 @@ export class NewTaskForm extends React.Component<Inputs> {
 
         console.log(this.state);
 
-        let t = new Task(this.state.title, this.state.completed);
+        let t = new Task(this.state.title, this.props.isCheckedItem ? true : false);
 
         this.props.onNewTask(t);
 
         this.setState({
             title: '',
+            completed: false,
             isChecklist: false
         });
     }
@@ -41,10 +45,10 @@ export class NewTaskForm extends React.Component<Inputs> {
 
     render() {
         return (
-            <Box component="div">
+            <Box component="div" className="new-task-form">
                 <form onSubmit={this.handleSubmit.bind(this)}>
                     <FormGroup row className="form-group">
-                        <FormControl>
+                        <FormControl style={{ width: '100%' }}>
                             <TextField value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} placeholder="New Task title"></TextField>
                         </FormControl>
                     </FormGroup>

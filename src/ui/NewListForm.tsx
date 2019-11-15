@@ -29,7 +29,7 @@ class NewListForm extends React.Component<Inputs> {
 
         this.setState({
             title: '',
-            isChecklist: false
+            isChecklist: this.state.isChecklist
         });
     }
 

@@ -127,7 +127,6 @@ export default class WorkListComponent extends React.Component<Inputs, WorkListC
                         {this.state.tasks.map((t: Task) => {
                             console.log(t.id);
                             return <TaskComponent key={t.id} task={t}
-                                isCompletable={this.props.worklist.isChecklist}
                                 onTaskCompleteChange={this._handleTaskCompleteChange.bind(this)}
                                 onTaskDelete={this.handleTaskDelete.bind(this)}
                             >
@@ -137,7 +136,7 @@ export default class WorkListComponent extends React.Component<Inputs, WorkListC
                     </div>
 
                     <div className="new-task-form">
-                        <NewTaskForm onNewTask={this.handleNewTask.bind(this)}></NewTaskForm>
+                        <NewTaskForm isCheckedItem={this.props.worklist.isChecklist} onNewTask={this.handleNewTask.bind(this)}></NewTaskForm>
                     </div>
                 </CardContent>
             </Card>

@@ -8,9 +8,14 @@ form {
   margin: 0 8px;
 }
 
-
-
-
 .new-list-form input {
   color: white !important;
+}
+
+.new-task-form form {
+  padding: 15px 15px;
+}
+
+.new-task-form .form-group {
+  width: 100%;
 }
