@@ -1,0 +1,31 @@
+.drawer {
+  background: white;
+  padding: 15px;
+  transition: transform ease-in 0.3s;
+}
+
+.drawer > div {
+  height: 100%;
+}
+
+.drawer-bottom {
+  height: 20vw;
+  transform: translateY(100%);
+  overflow-y: scroll;
+  box-shadow: 2px -5px 16px 0px #00000070;
+}
+
+.drawer-right {
+  width: 30vw;
+  height: 100%;
+  transform: translateX(100%);
+  box-shadow: -8px 0px 16px 0px #00000070;
+}
+
+.drawer-right.active {
+  transform: translateX(0);
+}
+
+.drawer-bottom.active {
+  transform: translateY(0);
+}

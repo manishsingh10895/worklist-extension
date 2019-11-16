@@ -21,3 +21,22 @@
 .App-link {
   color: #09d3ac;
 }
+
+.App {
+}
+
+.notes-container {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 40vh;
+}
+
+.top-sites-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 150px;
+  width: 100vw;
+}

@@ -30,8 +30,6 @@ export default class WorkArea extends React.Component<React.PropsWithChildren<an
     interval: any;
 
     onNewList(list: WorkList) {
-        console.log(list);
-
         this.setState((state) => {
             let workLists = state.workLists.concat(list);
 
@@ -177,18 +175,13 @@ export default class WorkArea extends React.Component<React.PropsWithChildren<an
 
 
         this.interval = setInterval(async () => {
-            console.log(this.state.workLists);
 
             await Storage.SaveWorkArea(this.state.workLists);
 
-            console.log("WorkSpace updated");
         }, 5000);
     }
 
     handleWorklistUpdate(id: string, worklist: WorkList) {
-
-        console.log("[WorkArea.Update]");
-        console.log(worklist);
 
         this.setState((state) => {
             return {
