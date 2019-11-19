@@ -8,9 +8,12 @@ import TopSitesDrawer from './ui/TopSitesDrawer';
 
 import './drawer.css';
 
+import { makeContextMenu } from './context-menu';
+
 type AppState = {
   notesDrawerOpened: boolean,
-  topSitesDrawerOpened: boolean
+  topSitesDrawerOpened: boolean,
+  searchTerm: string
 }
 
 function openNotesDrawer(state: AppState, setState: (state: AppState) => void) {
@@ -27,20 +30,39 @@ function closeNotesDrawer(state: AppState, setState: (state: AppState) => void) 
   })
 }
 
-const App: React.FC = () => {
+function openTopSitesDrawer(state: AppState, setState: (state: AppState) => void) {
+  setState({
+    ...state,
+    topSitesDrawerOpened: true,
+  })
+}
 
+function closeTopSitesDrawer(state: AppState, setState: (state: AppState) => void) {
+  setState({
+    ...state,
+    topSitesDrawerOpened: false,
+    searchTerm: ''
+  })
+}
+
+function searchLists() {
+
+}
+
+const App: React.FC = () => {
   const [state, setState] = useState({
     notesDrawerOpened: false,
-    topSitesDrawerOpened: false
+    topSitesDrawerOpened: false,
+    searchTerm: ''
   })
 
   return (
     <div className="App">
       <div className="header">
-        <AppHeader openNotesDrawer={() => openNotesDrawer(state, setState)}></AppHeader>
+        <AppHeader onSearch={(q: string) => setState({ ...state, searchTerm: q })} openNotesDrawer={() => openNotesDrawer(state, setState)}></AppHeader>
       </div>
       <div className="work-area">
-        <WorkArea>
+        <WorkArea search={state.searchTerm}>
         </WorkArea>
       </div>
 
@@ -48,8 +70,9 @@ const App: React.FC = () => {
         <NotesDrawer onClose={() => closeNotesDrawer(state, setState)} open={state.notesDrawerOpened}></NotesDrawer>
       </div>
 
-      <div className="top-sites-container">
-        <TopSitesDrawer></TopSitesDrawer>
+      <div onMouseEnter={(e) => openTopSitesDrawer(state, setState)} onMouseLeave={() => closeTopSitesDrawer(state, setState)}
+        className={`top-sites-container drawer drawer-bottom ${state.topSitesDrawerOpened ? 'active' : ''}`} >
+        <TopSitesDrawer open={state.topSitesDrawerOpened} onClose={() => closeTopSitesDrawer(state, setState)}></TopSitesDrawer>
       </div>
 
     </div>

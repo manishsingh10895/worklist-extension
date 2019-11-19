@@ -23,6 +23,7 @@
 }
 
 .App {
+  overflow: hidden;
 }
 
 .notes-container {

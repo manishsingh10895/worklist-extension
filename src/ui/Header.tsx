@@ -1,5 +1,5 @@
 import MenuIcon from '@material-ui/icons/Menu';
-import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, InputBase, Badge } from '@material-ui/core';
+import { AppBar, Toolbar, IconButton, Typography, Button, makeStyles, InputBase, Badge, Tooltip } from '@material-ui/core';
 import { classes } from 'istanbul-lib-coverage';
 import React from 'react';
 import { fade } from '@material-ui/core/styles';
@@ -76,8 +76,21 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+let timer: any;
+
+function handleSearchTextChange(s: string, props: any) {
+    if (timer) {
+        clearTimeout(timer)
+    }
+
+    setTimeout(() => {
+        props.onSearch(s);
+    }, 500);
+}
+
 export default function AppHeader(props: {
-    openNotesDrawer: Function
+    openNotesDrawer: Function,
+    onSearch: (q: string) => void
 }) {
 
     const classes = useStyles({});
@@ -93,6 +106,7 @@ export default function AppHeader(props: {
                         <SearchIcon />
                     </div>
                     <InputBase
+                        onChange={(e) => handleSearchTextChange(e.target.value, props)}
                         placeholder="Search…"
                         classes={{
                             root: classes.inputRoot,
@@ -102,10 +116,12 @@ export default function AppHeader(props: {
                     />
                 </div>
                 <div className={classes.grow} />
-                <div className={classes.sectionDesktop}>
-                    <IconButton aria-label="view notes" color="inherit" onClick={() => props.openNotesDrawer()}>
-                        <NoteIcon />
-                    </IconButton>
+                <div className={classes.sectionDesktop} >
+                    <Tooltip title="Show Notes" placement="left">
+                        <IconButton aria-label="view notes" color="inherit" onClick={() => props.openNotesDrawer()}>
+                            <NoteIcon />
+                        </IconButton>
+                    </Tooltip>
                 </div>
             </Toolbar>
         </AppBar>

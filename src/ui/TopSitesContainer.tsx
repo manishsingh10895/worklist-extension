@@ -3,6 +3,9 @@ import React, { Component } from 'react'
 import { Chip } from '@material-ui/core';
 import { string } from 'prop-types';
 import '../drawer.css';
+import { ENVIRONMENT } from '../config';
+
+declare var chrome: any;
 
 type TopSitesState = {
     topSites: {
@@ -17,12 +20,26 @@ export default class TopSitesContainer extends Component<any, TopSitesState> {
     }
 
     componentDidMount() {
-        this.setState({
-            topSites: [
-                { url: 'https://google.com', title: 'Google' },
-                { url: 'https://youtube.com', title: 'Youtube' }
-            ]
-        });
+        this._fetchTopSites();
+    }
+
+    _fetchTopSites() {
+
+        if (ENVIRONMENT == 'production') {
+            chrome.topSites.get((data: any[]) => {
+                this.setState({
+                    topSites: data
+                })
+            })
+        } else {
+            this.setState({
+                topSites: [
+                    { url: 'https://google.com', title: 'Google' },
+                    { url: 'https://youtube.com', title: 'Youtube' }
+                ]
+            })
+        }
+
     }
 
     render() {
@@ -44,8 +61,11 @@ export default class TopSitesContainer extends Component<any, TopSitesState> {
 
 function TopSite(props: any) {
     return (
-        <a href={props.url} target="_blank">
+        <a href={props.url} target="_blank" style={{ textDecoration: 'none', margin: '10px 15px', padding: '4px 8px', cursor: 'pointer' }}>
             <Chip
+                style={{
+                    cursor: 'pointer'
+                }}
                 label={props.title}
             >
 

@@ -1,10 +1,6 @@
 {
   "short_name": "React App",
   "name": "Worklist extension",
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff",
   "description": "Override the new tab page with your own todolist",
   "version": "0.3",
   "incognito": "split",
@@ -14,6 +10,8 @@
   "manifest_version": 2,
   "permissions": [
     "storage",
+    "tabs",
+    "contextMenus",
     "topSites",
     "notifications",
     "contextMenus"

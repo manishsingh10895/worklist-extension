@@ -36,6 +36,8 @@ export default class WorkArea extends React.Component<React.PropsWithChildren<an
             return {
                 workLists: workLists
             };
+        }, () => {
+            this.workLists = this.state.workLists;
         });
     }
 
@@ -53,6 +55,8 @@ export default class WorkArea extends React.Component<React.PropsWithChildren<an
             return {
                 workLists: list
             };
+        }, () => {
+            this.workLists = this.state.workLists;
         })
     }
 
@@ -164,19 +168,37 @@ export default class WorkArea extends React.Component<React.PropsWithChildren<an
     async _fetchWorkArea() {
         let worklists = await Storage.GetWorkArea();
 
+        console.log("Workread.fetchWorkarea");
+        console.log(worklists);
 
         this.setState({
             workLists: worklists
+        }, () => {
+            this.workLists = this.state.workLists
         });
+    }
+
+    componentDidUpdate(prevProps: any, prevState: any) {
+        console.log(prevProps);
+        console.log(this.props);
+
+        if (prevProps.search !== this.props.search) {
+            this.setState({
+                workLists: this.workLists.filter((w) => {
+                    return w.title.includes(this.props.search);
+                })
+            })
+        }
     }
 
     componentDidMount() {
         this._fetchWorkArea();
 
-
         this.interval = setInterval(async () => {
 
             await Storage.SaveWorkArea(this.state.workLists);
+
+            console.log(this.state.workLists);
 
         }, 5000);
     }

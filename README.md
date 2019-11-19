@@ -16,5 +16,11 @@
  * Added support for checklists 
  * Added dynamic backgrounds
  * Added support tasks as a url
+ * Added simple notes at right of the window
+ * Added view to show links to most used sites
+ * User can now expand and shrink lists
+ * Searching for lists
 
-![Screenshot](images/screenshot.png)
+![Screenshot Minimal](images/screenshot-minimal.png)
+![Screenshot notes](images/screenshot-notes.png)
+![Screenshot topsites](images/screenshot-topsites.png)

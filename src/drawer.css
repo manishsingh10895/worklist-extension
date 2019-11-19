@@ -1,7 +1,6 @@
 .drawer {
   background: white;
-  padding: 15px;
-  transition: transform ease-in 0.3s;
+  transition: all ease-in 0.3s;
 }
 
 .drawer > div {
@@ -10,9 +9,11 @@
 
 .drawer-bottom {
   height: 20vw;
-  transform: translateY(100%);
+  transform: translateY(93%);
   overflow-y: scroll;
   box-shadow: 2px -5px 16px 0px #00000070;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
 }
 
 .drawer-right {
@@ -28,4 +29,6 @@
 
 .drawer-bottom.active {
   transform: translateY(0);
+  border-top-left-radius: 4px !important;
+  border-top-right-radius: 4px !important;
 }

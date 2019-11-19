@@ -1,10 +1,12 @@
 import React from "react";
 import WorkList from "../models/list.model";
 import Task from "../models/task.model";
-import { Card, CardHeader, CardContent, Grid, IconButton } from "@material-ui/core";
+import { Card, CardHeader, CardContent, Grid, IconButton, Tooltip } from "@material-ui/core";
 import TaskComponent from "./Task";
 import { NewTaskForm } from "./NewTaskForm";
-import { Remove } from "@material-ui/icons";
+import { Remove, RemoveCircle, ExpandLess, ExpandMore } from "@material-ui/icons";
+
+import './WorkList.css';
 
 type Inputs = {
     worklist: WorkList,
@@ -16,7 +18,8 @@ type Inputs = {
 type WorkListComponentState = {
     title: string,
     tasks: Task[],
-    id: string
+    id: string,
+    expanded: boolean
 };
 
 export default class WorkListComponent extends React.Component<Inputs, WorkListComponentState> {
@@ -24,7 +27,8 @@ export default class WorkListComponent extends React.Component<Inputs, WorkListC
     state = {
         id: '',
         title: '',
-        tasks: []
+        tasks: [],
+        expanded: true
     }
 
     _handleTaskCompleteChange(completed: boolean, task: Task) {
@@ -53,8 +57,8 @@ export default class WorkListComponent extends React.Component<Inputs, WorkListC
 
     _stateToWorklist(): Partial<WorkList> {
         return {
-            id: this.state.id,
             list: this.state.tasks,
+            id: this.state.id,
             title: this.state.title
         };
     }
@@ -109,20 +113,42 @@ export default class WorkListComponent extends React.Component<Inputs, WorkListC
         });
     }
 
+    toggleExpansion() {
+        this.setState({
+            expanded: !this.state.expanded
+        })
+
+        console.log(this.state.expanded);
+    }
+
     render() {
+        console.log(this.state.expanded);
         return <Grid item xs={12} sm={12} lg={6} md={6}>
-            <Card >
+            <Card className={`worklist ${this.state.expanded ? 'expanded' : ''}`}  >
                 <CardHeader title={this.state.title}
                     action={
-                        <IconButton color="secondary" onClick={(e) => this.props.onWorklistDelete(this.props.worklist.id)} size="small" aria-label="settings">
-                            <Remove />
-                        </IconButton>
+                        <>
+                            <Tooltip title="Toggle Expand" placement="left">
+                                <IconButton color="primary" onClick={(e) => this.toggleExpansion()}>
+                                    {
+                                        this.state.expanded ?
+                                            <ExpandLess /> :
+                                            <ExpandMore />
+                                    }
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Remove list" placement="right">
+                                <IconButton color="secondary" onClick={(e) => this.props.onWorklistDelete(this.props.worklist.id)} size="small" aria-label="settings">
+                                    <RemoveCircle />
+                                </IconButton>
+                            </Tooltip>
+                        </>
                     }
                 >
 
                 </CardHeader>
 
-                <CardContent>
+                <CardContent className="worklist-content">
                     <div className="task-list">
                         {this.state.tasks.map((t: Task) => {
                             console.log(t.id);
